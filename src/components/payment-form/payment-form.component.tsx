@@ -13,6 +13,7 @@ import {
   FormContainer,
   PaymentButton,
 } from './payment-form.styles';
+import { useNavigate } from 'react-router-dom';
 
 const ifValidCardElement = (
   card: StripeCardElement | null
@@ -20,6 +21,7 @@ const ifValidCardElement = (
 
 const PaymentForm = () => {
   const stripe = useStripe();
+  const navigate=useNavigate();
   const elements = useElements();
   const amount = useSelector(selectCartTotal);
   const currentUser = useSelector(selectCurrentUser);
@@ -33,6 +35,8 @@ const PaymentForm = () => {
     }
 
     setIsProcessingPayment(true);
+    navigate('/');
+
 
     const response = await fetch('/.netlify/functions/create-payment-intent', {
       method: 'post',
